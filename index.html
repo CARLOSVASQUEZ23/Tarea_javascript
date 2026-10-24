@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Control de Cuadrado con DOM</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .cuadrado {
+            width: 400px;
+            height: 400px;
+            background-color: #3498db;
+            margin: 20px auto;
+            transition: background-color 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+
+    <!-- Ponemos nuestros botones juntos -->
+    <div>
+        <button id="btnCrear">Crear Cuadrado</button>
+        <button id="btnColor">Cambiar Color</button>
+        <button id="btnEliminar">Eliminar Cuadrado</button>
+    </div>
+
+    <div id="contenedor"></div>
+
+
+    <script>
+        const btnCrear = document.getElementById('btnCrear');
+        const btnColor = document.getElementById('btnColor');
+        const btnEliminar = document.getElementById('btnEliminar');
+        const contenedor = document.getElementById('contenedor');
+
+        let miCuadrado = null;
+        
+        // Array con los colores que se van a recorrer
+        const listaColores = ['#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6', '#e67e22'];
+        let indiceColor = 0;
+
+        //Crean su cuadrado pero ojo que este está inicializado como nullo ya que no debe verse a menos que le demos click al boton.
+        btnCrear.addEventListener('click', () => {
+            if (!miCuadrado) {
+                miCuadrado = document.createElement('div');
+                miCuadrado.classList.add('cuadrado');
+                miCuadrado.style.backgroundColor = listaColores[0];
+                indiceColor = 0;
+                contenedor.appendChild(miCuadrado);
+            }
+        });
+
+        //CAMBIAR COLOR RECORRIENDO EL ARRAY
+        btnColor.addEventListener('click', () => {
+            if (miCuadrado) {
+                miCuadrado.style.backgroundColor = listaColores[indiceColor];
+
+                // Incrementamos el índice para el siguiente clic
+                indiceColor++;
+                if (indiceColor >= listaColores.length) {
+                    indiceColor = 0;
+                }
+            }
+        });
+
+        //ELIMINAR CUADRADO
+        btnEliminar.addEventListener('click', () => {
+            if (miCuadrado) {
+                miCuadrado.remove();
+                miCuadrado = null; //y regresamos nullo el estado del boton para que no se vea.
+                indiceColor = 0; // Reiniciamos el índice al borrar
+            }
+        });
+    </script>
+
+</body>
+</html>
